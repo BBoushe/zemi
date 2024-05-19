@@ -1,2 +1,2 @@
 # zemi
-Browser extension to mass download images off message boards
+CLI Tool to mass download images off message boards
