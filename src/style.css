@@ -1,8 +1,13 @@
+/* Appropriate Scaling */
 body {
-    transform: scale(0.8); /* Scales the entire interface to 70% of its original size */
-    transform-origin: top left; /* Ensures scaling starts from the top-left corner */
-    width: 100%; /* Prevents scaling from causing horizontal overflow */
-    overflow: hidden; /* Avoids scrollbars caused by scaling */
+    transform: scale(0.9);
+    transform-origin: center;
+    width: 100%;
+    overflow: hidden;
+    width: 550px; /* Set the width of the popup */
+    height: 600px;
+    margin: 0;
+    padding: 0;
 }
 
 
@@ -10,7 +15,7 @@ body {
 #title {
     position: relative;
     text-align: center; 
-    padding: 2rem; 
+    padding: 1rem; 
     border-radius: 10px; 
     overflow: hidden; 
 }
