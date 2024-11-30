@@ -1,0 +1,90 @@
+body {
+    transform: scale(0.8); /* Scales the entire interface to 70% of its original size */
+    transform-origin: top left; /* Ensures scaling starts from the top-left corner */
+    width: 100%; /* Prevents scaling from causing horizontal overflow */
+    overflow: hidden; /* Avoids scrollbars caused by scaling */
+}
+
+
+/* Title Section */
+#title {
+    position: relative;
+    text-align: center; 
+    padding: 2rem; 
+    border-radius: 10px; 
+    overflow: hidden; 
+}
+
+#title::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width of the container */
+    height: 100%; /* Full height of the container */
+    background-image: url('img/banner.webp'); 
+    background-size: cover; 
+    background-position: center; 
+    opacity: 0.25; 
+    z-index: 0;
+    border-radius: 10px;
+}
+
+#title h1, #title h5 {
+    position: relative; 
+    z-index: 1;
+}
+
+/* Main Section */
+.row.main {
+    border-top: 2px solid #dee2e6;
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Border Div Styling */
+.border-div {
+    padding-top: 0.8rem;
+    border-top: 2px solid #dee2e6;
+    margin-top: 1rem;
+}
+
+/* Styled Checkboxes */
+.styled-checkbox .styled-checkbox-input:checked ~ .styled-checkbox-label {
+    background-color: #28a745;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.styled-checkbox .styled-checkbox-label {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-block;
+}
+
+.styled-checkbox .styled-checkbox-input {
+    margin-right: 0.5rem;
+    transform: scale(1.3);
+}
+
+/* Button Hover Effects */
+button {
+    transition: transform 0.2s ease;
+}
+
+button:hover {
+    transform: scale(1.03);
+}
+
+/* Footer */
+footer {
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
