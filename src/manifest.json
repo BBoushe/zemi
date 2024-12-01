@@ -4,7 +4,14 @@
     "description": "An extension to download images in bulk from message boards or websites",
     "manifest_version": 3,
     "author": "Bobby Boushe",
-	"permissions" : [ "tabs" ],
+	"permissions" : [ 
+        "tabs",
+        "activeTab",
+        "scripting"
+     ],
+     "background": {
+        "service_worker": "popup.js"
+     },
     "icons": {
         "16": "img/icons/icon16.png",
         "48": "img/icons/icon48.png",
