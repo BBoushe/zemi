@@ -15,7 +15,42 @@ is meant to work on the DOM of the active tab so it's run when necessary
 
 */
 
+// function to retrieve the checkbox values
+function getCheckboxValues() {
+    const checkboxes = document.querySelectorAll('input[name="file_types"]:checked');
+    const values = Array.from(checkboxes).map(checkbox => checkbox.value);
+    return values;
+}
+
 // adding an event listener after the DOM has fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('form')
-})
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const checkboxValues = getCheckboxValues();
+
+        // Sending Messages to Background Script
+        // pass checkbox values
+        browser.runtime.sendMessage({ action: 'passCheckboxValues', checkboxValues }, response => {
+            if(response && response.status === 'success'){
+                console.log("Checkbox values have been passed to background: ", checkboxValues);
+
+                // send action to inject script
+                browser.runtime.sendMessage({ action: 'injectScript' }, response => {
+                    if(response && response.status === 'injected') {
+                        console.log("Zemi injection initiated.");
+                    } else {
+                        console.error("Failed to inject script.");
+                    }
+                });
+            } else {
+                console.error("Failed to pass checkbox values to background script.")
+            }
+        });
+    });
+});
+
+    // TO-DO:
+    // implement the update function of the script

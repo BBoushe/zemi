@@ -1,6 +1,6 @@
 /* Appropriate Scaling */
 body {
-    transform: scale(0.9);
+    transform: scale(1);
     transform-origin: center;
     width: 100%;
     overflow: hidden;
@@ -10,6 +10,9 @@ body {
     padding: 0;
 }
 
+input:invalid {
+    border-color: red;
+}
 
 /* Title Section */
 #title {

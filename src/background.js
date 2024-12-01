@@ -10,9 +10,17 @@ extension
 
 */
 
+let checkboxValues = [];
+
 // Specificly designed function for passing messages between extensions and browsers
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if(message.action === 'injectScript') {
+    if(message.action === 'passCheckboxValues') {
+        checkboxValues = message.checkboxValues;
+        console.log("Recieved checkbox values: ", checkboxValues);
+
+        sendResponse({ status: "success"});
+    } 
+    else if (message.action === 'injectScript') {
         // Get the active tab via Tabs API
         browser.tabs.query({ active: true, currentWindow: true }, tabs => {
             const activeTabId = tabs[0].id;
@@ -25,12 +33,22 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 }, 
                 () => {
                     console.log("Zemi script successfully injected.");
-                    sendResponse({ status: 'success' });
-                }
-        );
+
+                    // send the actual values to the zemi.js script
+                    browser.tabs.sendMessage(tabs[0].id, { action: "setCheckboxValues", checkboxValues }, response => {
+                        if(browser.runtime.lastError){
+                            console.error("Error sending message to zemi script:", chrome.runtime.lastError.message);
+                        } else {
+                            console.log("Checkbox values sent to zemi.js", response);
+                        }
+                    });
+                }  
+            );
         });
 
-        return true; // this is required to use sendResponse asyncroniously, but it's not a complex
-        // callback function so we don't really need it here, but will keep for future work
+        sendResponse({ status: 'injected' });
     }
+
+    return true; // this is required to use sendResponse asyncroniously, but it's not a complex
+        // callback function so we don't really need it here, but will keep for future work
 });
