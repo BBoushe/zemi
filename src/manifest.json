@@ -10,7 +10,7 @@
         "scripting"
      ],
      "background": {
-        "service_worker": "popup.js"
+        "service_worker": "background.js"
      },
     "icons": {
         "16": "img/icons/icon16.png",
@@ -20,6 +20,6 @@
     "action": {
         "default_title": "Zemi",
         "default_icon": "img/icons/icon.png",
-        "default_popup": "index.html"
+        "default_popup": "popup.html"
     }
 }

@@ -8,7 +8,6 @@ function getCheckboxValues(event) {
 
 
 function downloadImages(){
-    event.preventDefault();
     const extValues = getCheckboxValues();
     const aTags =   document.querySelectorAll('a[href=]');
     console.log(aTags);
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         downloadImages();
     });
-    
+
     updateBtn.addEventListener('click', (event) => {
         event.preventDefault();
         updateImages();
