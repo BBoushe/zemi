@@ -15,10 +15,17 @@ is meant to work on the DOM of the active tab so it's run when necessary
 
 */
 
-// function to retrieve the checkbox values
+// This function retrieves the download location and checkbox values
+// this decision has been made to reduce cross-script calls and message handling
 function getCheckboxValues() {
+    // checkbox values
     const checkboxes = document.querySelectorAll('input[name="file_types"]:checked');
     const values = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+    // download location 
+    const downLocation = document.querySelector('input[name="down_loc"]').value; // convert input value into single value
+    values.push(downLocation); // append download_loc and then remove it
+
     return values;
 }
 

@@ -9,7 +9,9 @@
         "activeTab",
         "scripting",
         "webRequest",
-        "webRequestBlocking"
+        "webRequestBlocking",
+        "downloads",
+        "downloads.open"
      ],
     "background": {
         "scripts": ["background.js"],

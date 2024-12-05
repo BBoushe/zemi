@@ -19,8 +19,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log("Recieved checkbox values: ", checkboxValues);
 
         sendResponse({ status: "success"});
-    } 
-    else if (message.action === 'injectScript') {
+    } else if (message.action === 'injectScript') {
         // Get the active tab via Tabs API
         browser.tabs.query({ active: true, currentWindow: true }, tabs => {
             const activeTabId = tabs[0].id;
@@ -37,7 +36,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     // send the actual values to the zemi.js script
                     browser.tabs.sendMessage(tabs[0].id, { action: "setCheckboxValues", checkboxValues }, response => {
                         if(browser.runtime.lastError){
-                            console.error("Error sending message to zemi script:", chrome.runtime.lastError.message);
+                            console.error("Error sending message to zemi script:", browser.runtime.lastError.message);
                         } else {
                             console.log("Checkbox values sent to zemi.js", response);
                         }
@@ -47,8 +46,45 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
 
         sendResponse({ status: 'injected' });
+    } 
+    else if(message.action === "downloadImages") {
+        const { images, downloadLocation } = message;
+
+        if(!images || images.lenght === 0) {
+            console.error("No images to download.");
+            sendResponse({ status: "error", message: "No images provided"});
+            return;
+        }
+
+        images.forEach(image => {
+            const {url, filename} = image;
+            
+            browser.downloads.download({
+                url: url,
+                filename: `${downloadLocation}/${filename}`,
+                saveAs: false
+            }).then(downloadId => {
+                console.log(`Download started for ID ${downloadId} for file: ${filename}`);
+            }).catch(error => {
+                console.log(`Failed to download ${filename}:`, error);
+            });
+        });
+
+        sendResponse({ status: "success", message: "Download initiated"});
+    } else {
+        console.warn("Unknown action recieved: ", message.action);
+        sendResponse({ status: "error", message: "Unknown action"});
     }
 
     return true; // this is required to use sendResponse asyncroniously, but it's not a complex
         // callback function so we don't really need it here, but will keep for future work
+});
+
+// Optional: Listen for changes in the download progress (enhancement)
+browser.downloads.onChanged.addListener(downloadDelta => {
+    if (downloadDelta.state && downloadDelta.state.current === "complete") {
+        console.log(`Download ${downloadDelta.id} completed.`);
+    } else if (downloadDelta.error) {
+        console.error(`Download ${downloadDelta.id} failed:`, downloadDelta.error);
+    }
 });
