@@ -12,10 +12,72 @@ extension
 - This is the only script that we run in the popup DOM because the background
 service worker runs independently of the extensions DOM, and the zemi.js script
 is meant to work on the DOM of the active tab so it's run when necessary
-
 */
 
-// This function retrieves the download location and checkbox values
+
+/*                 --- Main Logic ---                   */
+/*              ------------------------                */
+/*              ------------------------                */
+/*              ------------------------                */
+
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form');
+    const cancelButton = document.getElementById("cancelButton");
+    const progressBar = document.getElementById("downloadProgressBar");
+
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const checkboxValues = getCheckboxValues();
+
+        // start progress bar listener listener after we've submitted
+        startProgressBarListener();
+
+        // Sending Messages to Background Script
+        // pass checkbox values
+        browser.runtime.sendMessage({ action: 'passCheckboxValues', checkboxValues }, response => {
+            if(response && response.status === 'success'){
+                console.log("Checkbox values have been passed to background: ", checkboxValues);
+
+                // inject script
+                browser.runtime.sendMessage({ action: 'injectScript' }, response => {
+                    if(response && response.status === 'injected') {
+                        console.log("Zemi injection initiated.");
+                    } else {
+                        console.error("Failed to inject script.");
+                    }
+                });
+            } else {
+                console.error("Failed to pass checkbox values to background script.")
+            }
+        });
+    });
+
+    cancelButton.addEventListener('click', () => {
+        browser.runtime.sendMessage({ action: 'cancelDownload' }, response => {
+            if(response && response.status === "canceled"){
+                console.log("Successfully canceled download");
+            } else {
+                console.error("Cancel failed because of: ", error);
+            }
+        });
+
+
+        // Reset the UI
+        cancelButton.style.display = "none"; // Hide cancel button
+        progressBar.style.width = "0%"; // Reset progress bar
+        progressBar.setAttribute("aria-valuenow", "0");
+        progressBar.textContent = "0%";
+    });
+});
+
+
+/*              --- Helper Functions ---                */
+/*              ------------------------                */
+/*              ------------------------                */
+/*              ------------------------                */
+
+// retrieves the download location and checkbox values
 // this decision has been made to reduce cross-script calls and message handling
 function getCheckboxValues() {
     // checkbox values
@@ -29,35 +91,17 @@ function getCheckboxValues() {
     return values;
 }
 
-// adding an event listener after the DOM has fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('form');
-
-    form.addEventListener('submit', event => {
-        event.preventDefault();
-
-        const checkboxValues = getCheckboxValues();
-
-        // Sending Messages to Background Script
-        // pass checkbox values
-        browser.runtime.sendMessage({ action: 'passCheckboxValues', checkboxValues }, response => {
-            if(response && response.status === 'success'){
-                console.log("Checkbox values have been passed to background: ", checkboxValues);
-
-                // send action to inject script
-                browser.runtime.sendMessage({ action: 'injectScript' }, response => {
-                    if(response && response.status === 'injected') {
-                        console.log("Zemi injection initiated.");
-                    } else {
-                        console.error("Failed to inject script.");
-                    }
-                });
-            } else {
-                console.error("Failed to pass checkbox values to background script.")
-            }
-        });
+function startProgressBarListener() {
+    // update progress bar dynamically
+    browser.runtime.onMessage.addListener(message => {
+        if(message.action === "updateProgress") {
+            const progressBar = document.getElementById("downloadProgressBar");
+            progressBar.style.width = `${message.progress}%`;
+            progressBar.setAttribute("aria-valuenow", message.progress);
+            progressBar.textContent = `${message.progress}%`;
+        } else if(message.action === 'startedDownload') {
+            const cancelButton = document.getElementById("cancelButton");
+            cancelButton.style.display = "block";
+        }
     });
-});
-
-    // TO-DO:
-    // implement the update function of the script
+}

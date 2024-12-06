@@ -4,14 +4,10 @@ body {
     transform-origin: center;
     width: 100%;
     overflow: hidden;
-    width: 550px; /* Set the width of the popup */
-    height: 600px;
+    width: 550px;
+    height: 700px;
     margin: 0;
     padding: 0;
-}
-
-input:invalid {
-    border-color: red;
 }
 
 /* Title Section */
@@ -30,9 +26,11 @@ input:invalid {
     left: 0;
     width: 100%; /* Full width of the container */
     height: 100%; /* Full height of the container */
-    background-image: url('img/banner.webp'); 
+
+    background-image: url('img/chill_banner_1.gif'); 
     background-size: cover; 
-    background-position: center; 
+    background-position: left bottom -160px; 
+
     opacity: 0.25; 
     z-index: 0;
     border-radius: 10px;
@@ -45,16 +43,21 @@ input:invalid {
 
 /* Main Section */
 .row.main {
-    border-top: 2px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
     padding-top: 1rem;
     margin-top: 0.5rem;
+}
+
+input:invalid {
+    border-bottom-color: red;
+    border-bottom-width: 2px;
 }
 
 /* Border Div Styling */
 .border-div {
     padding-top: 0.8rem;
-    border-top: 2px solid #dee2e6;
-    margin-top: 1rem;
+    border-top: 1px solid #dee2e6;
+    margin-top: 0.8rem;
 }
 
 /* Styled Checkboxes */
@@ -86,13 +89,33 @@ button {
 }
 
 button:hover {
-    transform: scale(1.03);
+    transform: scale(1.1);
+}
+
+.bg-green {
+    background-color: #28a745;
+}
+
+button.bg-green:hover {
+    color: #fff; /* White text on hover */
+    background-color: #23933d; /* Darker green for hover state */
+    border-color: #158450; /* Darker green border */
 }
 
 /* Footer */
 footer {
-    padding-top: 1rem;
     border-top: 1px solid #dee2e6;
     font-size: 0.875rem;
     color: #6c757d;
+}
+
+/* Progress Bar Section */
+.progress,
+.progress-bar {
+    padding: 0;
+    margin: 0;
+}
+
+#cancelButton {
+    display: none;
 }

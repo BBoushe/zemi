@@ -3,15 +3,13 @@
     "version": "1.0.0",
     "description": "An extension to download images in bulk from message boards or websites",
     "manifest_version": 3,
-    "author": "Bobby Boushe",
 	"permissions" : [ 
         "tabs",
         "activeTab",
         "scripting",
-        "webRequest",
-        "webRequestBlocking",
         "downloads",
-        "downloads.open"
+        "downloads.open",
+        "storage"
      ],
     "background": {
         "scripts": ["background.js"],
@@ -24,7 +22,7 @@
      },
     "action": {
         "default_title": "Zemi",
-        "default_icon": "img/icons/icon.png",
+        "default_icon": "img/icons/icon128.png",
         "default_popup": "popup.html"
     }
 }
