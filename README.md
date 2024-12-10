@@ -113,11 +113,4 @@ Use Zemi responsibly and ensure compliance with website policies and copyright l
 
 ---
 
-## Contact
-
-- **Developer**: [BBoushe](mailto:bboushe@yahoo.com)
-- **GitHub**: [Zemi Repository](https://github.com/BBoushe/zemi)
-
----
-
 Feel free to contribute to this extension.
