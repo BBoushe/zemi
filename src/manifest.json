@@ -16,13 +16,13 @@
         "type": "module"
     },
     "icons": {
-        "16": "img/icons/icon16.png",
-        "48": "img/icons/icon48.png",
-        "128": "img/icons/icon128.png"
+        "16": "img/icons/FAicon.webp",
+        "48": "img/icons/FAicon.webp",
+        "128": "img/icons/FAicon.webp"
      },
     "action": {
         "default_title": "Zemi",
-        "default_icon": "img/icons/icon128.png",
+        "default_icon": "img/icons/FAicon.webp",
         "default_popup": "popup.html"
     }
 }

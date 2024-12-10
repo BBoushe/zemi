@@ -1,9 +1,25 @@
-/*
-                        --- Content Script ---
-The purpose of this script is to handle the main business logic of the extension.
-That being downloading the images from the DOM with specified filetypes. The script
-queries all anchor tags filters them and then proceeds to download each.
-*/
+/**
+ * Zemi - Bulk Image Downloader Extension
+ * 
+ * Content Script
+ * --------------
+ * Core logic for interacting with the active tab's DOM, locating image links 
+ * based on user-defined file types, and sending them to the background script 
+ * for downloading.
+ * 
+ * Responsibilities:
+ * - Scan the DOM for `<a>` tags, filter by file type, and exclude invalid links.
+ * - Communicate with the background script for downloading due to API restrictions.
+ * 
+ * Features:
+ * - Dynamic file type filtering based on user preferences.
+ * - Context-aware link processing with customizable logic for specific websites.
+ * 
+ * Notes:
+ * - Extending support for new websites requires modifying `getAndFilterImages`.
+ * - Operates within content script restrictions (e.g., no direct access to `downloads` API).
+ */
+
 
 /*                 --- Main Logic ---                   */
 /*              ------------------------                */
@@ -55,6 +71,7 @@ function getAndFilterImages(){
     return filteredATags;
 }
 
+// sends all images to background.js script in order to access downloads API
 function sendAllImagesToDownload(){
     const aTags = getAndFilterImages();
     const imageLinks = aTags.map(tag => ({ // returns an object for each a tag that has only the link and the filename
