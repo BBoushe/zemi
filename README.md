@@ -69,10 +69,10 @@ The user interface is presented as a popup with the following components:
 ---
 
 ## Screenshots / Demos
-<img src="img/demo/demo.gif" alt="Zemi Demo" width="500" />
+<img src="src/img/demo/demo.gif" alt="Zemi Demo" width="500" />
 <br>
-<img src="img/demo/initial.png" alt="Zemi Popup Interface" width="500" />
-<img src="img/demo/downloaded.png" alt="Zemi Popup Interface" width="500" />
+<img src="src/img/demo/initial.png" alt="Zemi Popup Interface" width="500" />
+<img src="src/img/demo/downloaded.png" alt="Zemi Popup Interface" width="500" />
 
 
 ---
