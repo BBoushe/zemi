@@ -86,7 +86,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 // Save hashes when the session ends
-browser.runtime.onShutdown.addListener(() => {
+browser.runtime.onSuspend.addListener(() => {
     saveHashesToStorage();
 });
 

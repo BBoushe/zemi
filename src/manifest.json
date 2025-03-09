@@ -16,13 +16,19 @@
         "type": "module"
     },
     "icons": {
-        "16": "img/icons/FAicon.webp",
-        "48": "img/icons/FAicon.webp",
-        "128": "img/icons/FAicon.webp"
-     },
+        "16": "img/icons/FAicon-16.png",
+        "48": "img/icons/FAicon-48.png",
+        "128": "img/icons/FAicon-128.png",
+        "200": "img/icons/FAicon.png"
+    },
     "action": {
         "default_title": "Zemi",
-        "default_icon": "img/icons/FAicon.webp",
+        "default_icon": "img/icons/FAicon.png",
         "default_popup": "popup.html"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "zemi_extension@example.com"
+        }
     }
 }
